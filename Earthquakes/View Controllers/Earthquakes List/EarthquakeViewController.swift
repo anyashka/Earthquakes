@@ -84,8 +84,8 @@ extension EarthquakeViewController: UITableViewDelegate {
 extension EarthquakeViewController {
     func fetchEarthquakes() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        APIClient.getListOfEarthquakes{ (data) in
+ 
+        APIClient.shared.getListOfEarthquakes{ (data) in
             let json = JSON(data)
             guard let earthquakeArray = json["features"].array else { return }
             for earthquakeJSON in earthquakeArray {

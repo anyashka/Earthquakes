@@ -11,10 +11,17 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class APIClient {
+protocol APIClientProvider {
+    func getListOfEarthquakes(completionBlock: @escaping ( _ info: Any) -> Void)
+}
 
-    class func getListOfEarthquakes(completionBlock: @escaping ( _ info: Any) -> Void) {
-        Alamofire.request("http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=\(Date().asString14DaysFromNow())")
+class APIClient: APIClientProvider {
+    static let shared: APIClient = APIClient()
+    
+    private(set) var baseURL: String = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=\(Date().asString14DaysFromNow())"
+    
+    func getListOfEarthquakes(completionBlock: @escaping ( _ info: Any) -> Void) {
+        Alamofire.request(baseURL)
             .validate(statusCode: 200..<201)
             .responseJSON { response -> Void in
                 guard response.result.isSuccess else {
