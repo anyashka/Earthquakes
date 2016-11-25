@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import PKHUD
+import CoreData
 
 class DetailedEarthquakeViewController: UIViewController {
     
@@ -24,6 +25,12 @@ class DetailedEarthquakeViewController: UIViewController {
     @IBOutlet weak var shareBarButtonItem: UIBarButtonItem!
     
     var earthquake: Quake?
+    
+    lazy var context: NSManagedObjectContext = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        return context
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +53,7 @@ class DetailedEarthquakeViewController: UIViewController {
         depthLabel.text = String(earthquake.depth)
         magnitudeLabel.text = String(earthquake.magnitude)
         
-        if Earthquake.isFavourite(quake: earthquake) {
+        if Earthquake.isFavourite(quake: earthquake, inContext: context) {
             favouritiesButton.isSelected = true
         } else {
             favouritiesButton.isSelected = false
@@ -79,9 +86,9 @@ class DetailedEarthquakeViewController: UIViewController {
         
         guard let earthquake = earthquake else { return }
         if sender.isSelected {
-            Earthquake.createEarthquake(from: earthquake)
+            Earthquake.createEarthquake(from: earthquake, inContext: context)
         } else {
-            Earthquake.removeFromFavourites(quake: earthquake)
+            Earthquake.removeFromFavourites(quake: earthquake, inContext: context)
         }
     }
     

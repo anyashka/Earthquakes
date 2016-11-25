@@ -10,13 +10,9 @@ import Foundation
 import UIKit
 import CoreData
 
-
 public class Earthquake: NSManagedObject {
 
-    class func createEarthquake(from earthquake: Quake) {
-        //let appDelegate = AppDelegate()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+    class func createEarthquake(from earthquake: Quake, inContext context: NSManagedObjectContext) {
         guard let newEarthquake = NSEntityDescription.insertNewObject(forEntityName: "Earthquake", into: context) as? Earthquake else { return }
         
         newEarthquake.name = earthquake.name
@@ -28,7 +24,7 @@ public class Earthquake: NSManagedObject {
         newEarthquake.url = earthquake.url
         newEarthquake.identificator = earthquake.indentificator
         
-        appDelegate.saveContext()
+        CoreDataManager.save(context: context)
     }
     
     func mapToQuake() -> Quake? {
@@ -36,9 +32,7 @@ public class Earthquake: NSManagedObject {
         return Quake(name: name, magnitude: self.magnitude, date: date, url: url, latitude: self.latitude, longitude: self.longitude, depth: self.depth, indentificator: identificator)
     }
     
-    class func isFavourite (quake: Quake) -> Bool {
-        let appDelegate = AppDelegate()
-        let context = appDelegate.persistentContainer.viewContext
+    class func isFavourite (quake: Quake, inContext context: NSManagedObjectContext) -> Bool {
         let identificator = quake.indentificator
         let fetchRequest: NSFetchRequest<Earthquake> = Earthquake.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "identificator = %@", argumentArray: [identificator])
@@ -57,9 +51,7 @@ public class Earthquake: NSManagedObject {
         }
     }
     
-    class func removeFromFavourites (quake: Quake) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+    class func removeFromFavourites (quake: Quake, inContext context: NSManagedObjectContext) {
         let identificator = quake.indentificator
         let fetchRequest: NSFetchRequest<Earthquake> = Earthquake.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "identificator = %@", argumentArray: [identificator])
@@ -68,7 +60,7 @@ public class Earthquake: NSManagedObject {
             let earthquakeObject = try context.fetch(fetchRequest)
             guard earthquakeObject.count == 1, let eartquake = earthquakeObject.first else { return }
             context.delete(eartquake)
-            appDelegate.saveContext()
+            CoreDataManager.save(context: context)
         } catch {
             let fetchError = error as NSError
             print("\(fetchError), \(fetchError.userInfo)")

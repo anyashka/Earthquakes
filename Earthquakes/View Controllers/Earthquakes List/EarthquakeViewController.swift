@@ -73,6 +73,9 @@ extension EarthquakeViewController: UITableViewDataSource {
 
 //MARK: Table View Delegate Methods
 extension EarthquakeViewController: UITableViewDelegate {
+    @objc(tableView:commitEditingStyle:forRowAtIndexPath:) func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let earthquake = earthquakes[indexPath.row]
