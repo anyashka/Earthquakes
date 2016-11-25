@@ -42,7 +42,6 @@ class FavouritiesTableViewController: UIViewController {
 
 //MARK: TableView DataSource methods
 extension FavouritiesTableViewController: UITableViewDataSource {
-    
     func setupTableView() {
         let cellNibName = UINib(nibName: EarthquakeTableViewCell.cellIdentifier, bundle: nil)
         tableView.register(cellNibName, forCellReuseIdentifier: EarthquakeTableViewCell.cellIdentifier)
@@ -69,7 +68,6 @@ extension FavouritiesTableViewController: UITableViewDataSource {
 
 //MARK: TableView Delegate methods
 extension FavouritiesTableViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard fetchedResultsController.fetchedObjects?.count != 0 else { return }
         let earthquakeObject = fetchedResultsController.object(at: indexPath)
@@ -94,7 +92,6 @@ extension FavouritiesTableViewController {
 
 //MARK: FetchedResultsController Delegate methods
 extension FavouritiesTableViewController: NSFetchedResultsControllerDelegate {
-    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
          self.tableView.beginUpdates()
     }

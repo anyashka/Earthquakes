@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 
 class CoreDataManager {
-
    class func save(context: NSManagedObjectContext) {
         if context.hasChanges {
             do {

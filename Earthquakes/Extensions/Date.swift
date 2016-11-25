@@ -9,7 +9,6 @@
 import UIKit
 
 extension Date {
-    
     func asString() -> String {
         let dayTimePeriodFormatter = DateFormatter()
         dayTimePeriodFormatter.dateFormat = "MMM dd YYYY hh:mm a"

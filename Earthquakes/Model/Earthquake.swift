@@ -32,7 +32,6 @@ class Quake: NSObject {
     }
     
     class func parse(earthquakeJSON: JSON) -> Quake? {
-        
         let earthquakeProperties = earthquakeJSON["properties"].dictionaryValue
         
         guard let name = earthquakeProperties["place"]?.stringValue,
@@ -58,5 +57,4 @@ class Quake: NSObject {
         
         return earthquake
     }
-    
 }

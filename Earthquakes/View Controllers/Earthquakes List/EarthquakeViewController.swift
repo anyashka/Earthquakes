@@ -44,7 +44,6 @@ class EarthquakeViewController: UIViewController {
 
 //MARK: Table View Data Source methods
 extension EarthquakeViewController: UITableViewDataSource {
-    
     func setUpTableView() {
         let cellNothingFoundNib = UINib(nibName: "NothingFoundCell", bundle: nil)
         tableView.register(cellNothingFoundNib, forCellReuseIdentifier: "NothingFoundCell")
@@ -73,10 +72,6 @@ extension EarthquakeViewController: UITableViewDataSource {
 
 //MARK: Table View Delegate Methods
 extension EarthquakeViewController: UITableViewDelegate {
-    @objc(tableView:commitEditingStyle:forRowAtIndexPath:) func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let earthquake = earthquakes[indexPath.row]
         guard let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "detailedViewController") as? DetailedEarthquakeViewController else { return }
