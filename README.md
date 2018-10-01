@@ -12,7 +12,7 @@ Earthquakes is an open source iOS Application built in Swift 3. It uses [open AP
 - NSFetchedResultsController to update favourite earthquakes list 
 - MapKit to show an earthquake location
 
-##Requirements
+## Requirements
 - Swift 3.0 & Xcode 8
 - iOS 10.0+ 
 
